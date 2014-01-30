@@ -1,0 +1,5 @@
+{
+    "cmd": ["/home/rsi/lhotse/gherkin-validator/build/install/gherkin-validator/bin/gherkin-validator", "$file"],
+    "file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
+    "selector": "source.gherkin"
+}
