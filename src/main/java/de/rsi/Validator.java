@@ -8,8 +8,11 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,8 +20,37 @@ public class Validator {
 	private static boolean hasErrors = false;
 
 	public static void main(String[] args) throws Exception {
+		final File path;
+		if (args.length > 0) {
+			path = new File(args[0]);
+		} else {
+			String userHome = System.getProperty("user.home");
+			File conf = new File(new File(userHome), ".lhotse-config.properties");
+			if (conf.isFile()) {
+				Properties prop = new Properties();
+				InputStream input = null;
 
-		final File path = new File(args[0]);
+				try {
+					input = new FileInputStream(conf);
+					prop.load(input);
+					// get the property value and print it out
+					String ltngDir = prop.getProperty("lhotse-tracking-nextgen-dir");
+					System.out.println(ltngDir);
+					path = new File(ltngDir, "ts-processor/src/test/resources/cucumber");
+				} finally {
+					if (input != null) {
+						try {
+							input.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			} else {
+				throw new RuntimeException("no file/folder as argument and no conf at" +conf.getAbsolutePath());
+			}
+
+		}
 		if (path.isDirectory()) {
 			for (final File file : path.listFiles(new FileFilter() {
 				@Override
