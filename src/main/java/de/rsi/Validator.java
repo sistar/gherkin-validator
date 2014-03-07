@@ -68,7 +68,12 @@ public class Validator {
 				System.exit(1);
 			}
 		}
-		if (hasErrors) System.exit(1);
+		if (hasErrors) {
+			System.out.println("*** GHERKIN SYNTAX ERRORS *** DO NOT PUSH ***");
+			System.exit(1);
+		}   else {
+			System.out.println("*** OK ***");
+		}
 	}
 
 	private static void parseFeature(File f) throws FileNotFoundException, UnsupportedEncodingException {
