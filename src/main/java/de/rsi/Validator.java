@@ -36,7 +36,7 @@ public class Validator {
 					// get the property value and print it out
 					String ltngDir = prop.getProperty("lhotse-tracking-nextgen-dir");
 					System.out.println(ltngDir);
-					path = new File(ltngDir, "ts-processor/src/test/resources/cucumber");
+					path = new File(ltngDir, "ts-cucumber/src/test/resources/cucumber");
 				} finally {
 					if (input != null) {
 						try {
@@ -59,7 +59,6 @@ public class Validator {
 				}
 			})) {
 				parseFeature(file);
-
 			}
 		} else {
 			if (path.isFile()) {
